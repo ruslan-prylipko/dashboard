@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ua" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Dashboard</title>
+</head>
+
+<body>
+	<div>
+		<form action="/dashboard/rates/all" method="get">
+			<div>
+				<p>
+					<span>Курс валют:</span>
+				<div>
+					<input type="date" name="date"/>
+				</div>
+				<div>
+					<input type="submit" value="Відправити"/>
+				</div>
+			</div>
+		</form>
+		<div th:if="${rates}">
+			<table>
+				<thead>
+				<tr>
+					<th>Код</th>
+					<th>Валюта</th>
+					<th>Назва</th>
+					<th>Курс</th>
+					<th>Тренд</th>
+					<th>Дата</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr th:each="rate : ${rates}">
+						<td th:text="${rate.iso}"/>
+						<td th:text="${rate.code}"/>
+						<td th:text="${rate.name}"/>
+						<td th:text="${rate.rate}"/>
+						<td th:text="${rate.trend}"/>
+						<td th:text="${rate.date}"/>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</body>
+
+</html>
