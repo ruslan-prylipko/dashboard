@@ -11,6 +11,7 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 
 import ua.com.dashboard.services.rate.RateService;
+import ua.com.dashboard.utils.DateUtil;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -30,13 +31,8 @@ public class RateController {
     @GetMapping("/all")
     public String getAllRates(@RequestParam("date") String date, Model model)
             throws JsonIOException, JsonSyntaxException, IOException, ParseException {
-        model.addAttribute("rates", rateService.getRates(reverse(date)));
+        model.addAttribute("rates",
+                rateService.getRates(DateUtil.convert("yyyy-MM-dd", "dd-MM-yyyy", date)));
         return "dashboard";
     }
-    
-    private static String reverse(String date) throws ParseException {
-    	SimpleDateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd");
-    	SimpleDateFormat outputDate = new SimpleDateFormat("dd-MM-yyyy");
-    	return outputDate.format(inputDate.parse(date));
-	}
 }

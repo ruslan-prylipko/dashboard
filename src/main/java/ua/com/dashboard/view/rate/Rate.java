@@ -1,21 +1,25 @@
 package ua.com.dashboard.view.rate;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
+@Entity
+@Table
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 public class Rate {
-    @EqualsAndHashCode.Include
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     private String iso;
-    @EqualsAndHashCode.Include
     private String code;
     private String name;
+    @EqualsAndHashCode.Exclude
     private String rate;
+    @EqualsAndHashCode.Exclude
     private String trend;
     private String date;
 
