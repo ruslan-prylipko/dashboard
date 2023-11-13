@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ua.com.dashboard.repositories.rate.RateRepository;
+import ua.com.dashboard.services.resource.WebResourceServiceImpl;
 import ua.com.dashboard.utils.DateUtil;
 import ua.com.dashboard.view.rate.Rate;
 import ua.com.dashboard.view.rate.Rates;
@@ -24,33 +25,33 @@ import java.util.*;
 public class RateServiceImpl implements RateService {
 
 	private final RateRepository rateRepository;
+	private final WebResourceServiceImpl webResourceService;
 
 	@Autowired
-	public RateServiceImpl(RateRepository rateRepository) {
+	public RateServiceImpl(RateRepository rateRepository, WebResourceServiceImpl webResourceService) {
 		this.rateRepository = rateRepository;
+		this.webResourceService = webResourceService;
 	}
-
-	@Value("${api.minfin.com.ua.rates}")
-	private String strURL;
 
 	@Override
 	public List<Rate> getRates(final String date)
 			throws JsonIOException, JsonSyntaxException, IOException, ParseException {
-		List<Rate> findRates = rateRepository.findAllByDate(
+
+		List<Rate> ratesList = rateRepository.findAllByDate(
 				DateUtil.convert("dd-MM-yyyy", "dd.MM.yyyy", date));
 
-		if (!findRates.isEmpty()) {
+		if (!ratesList.isEmpty()) {
 			log.info("Reads rates from database");
-			return findRates;
+			return ratesList;
 		}
 
-		URL url = new URL(strURL + date);
 		Gson gson = new Gson();
-		Rates rates = gson.fromJson(new JsonReader(new InputStreamReader(url.openConnection().getInputStream())),
-				Rates.class);
-		List<Rate> r = Arrays.asList(rates.getData());
-		rateRepository.saveAll(r);
+		Rates rates = gson.fromJson(new JsonReader(webResourceService.getResourceByURL(date)), Rates.class);
+
+		ratesList = Arrays.asList(rates.getData());
+		rateRepository.saveAll(ratesList);
 		log.info("Reads rates from website");
-		return r;
+
+		return ratesList;
 	}
 }
