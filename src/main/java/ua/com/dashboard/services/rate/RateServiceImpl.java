@@ -37,8 +37,8 @@ public class RateServiceImpl implements RateService {
 	public List<Rate> getAllRates(final String date)
 			throws JsonIOException, JsonSyntaxException, IOException, ParseException {
 
-		List<Rate> ratesList = rateRepository.findAllByDate(
-				DateUtil.convert("dd-MM-yyyy", "dd.MM.yyyy", date));
+		String dbDate = DateUtil.convert("dd-MM-yyyy", "dd.MM.yyyy", date);
+		List<Rate> ratesList = rateRepository.findAllByDate(dbDate);
 
 		if (!ratesList.isEmpty()) {
 			log.info("Reads rates from database");

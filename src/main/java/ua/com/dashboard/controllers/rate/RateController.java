@@ -13,6 +13,7 @@ import com.google.gson.JsonSyntaxException;
 import ua.com.dashboard.repositories.rate.RateRepository;
 import ua.com.dashboard.services.rate.RateService;
 import ua.com.dashboard.utils.DateUtil;
+import ua.com.dashboard.utils.Util;
 import ua.com.dashboard.view.rate.Rate;
 
 import java.io.IOException;
@@ -33,6 +34,7 @@ public class RateController {
     @GetMapping("/all")
     public String getAllRates(@RequestParam("date") String date, Model model)
             throws JsonIOException, JsonSyntaxException, IOException, ParseException {
+        Util.isMatchingToPattern("\\d{4}-\\d{2}-\\d{2}", date);
         model.addAttribute("rates", rateService.getAllRates(
                 DateUtil.convert("yyyy-MM-dd", "dd-MM-yyyy", date)));
         return "dashboard";

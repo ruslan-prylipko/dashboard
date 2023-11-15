@@ -9,15 +9,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DateUtilTest {
 
-    @SneakyThrows
     @Test
+    @SneakyThrows
     void testConvertCorrectInput() {
         assertEquals("10-11-2023",
                 DateUtil.convert("yyyy-MM-dd", "dd-MM-yyyy", "2023-11-10"));
     }
 
-    @SneakyThrows
     @Test
+    @SneakyThrows
     void testConvertInCorrectInput() {
         assertNotEquals("10-11-2023",
                 DateUtil.convert("yyyy-MM-dd", "dd-MM-yyyy", "10-11-2023"));
