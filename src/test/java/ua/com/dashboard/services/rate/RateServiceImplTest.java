@@ -24,8 +24,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class RateServiceImplTest {
 
-    private String date = "09-11-2023";
-    private String dbDate = "09.11.2023";
+    private final String date = "09-11-2023";
+    private final String dbDate = "09.11.2023";
 
     @Mock
     RateRepository rateRepository;

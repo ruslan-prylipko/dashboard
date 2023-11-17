@@ -1,6 +1,7 @@
 package ua.com.dashboard.controllers.rate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,10 @@ import java.util.List;
 @Controller
 @RequestMapping("/dashboard/rates")
 public class RateController {
-	
+
+    @Value("${api.minfin.com.ua.rates}")
+    private String baseURL;
+
     private final RateService rateService;
 
     @Autowired
@@ -36,7 +40,7 @@ public class RateController {
             throws JsonIOException, JsonSyntaxException, IOException, ParseException {
         Util.isMatchingToPattern("\\d{4}-\\d{2}-\\d{2}", date);
         model.addAttribute("rates", rateService.getAllRates(
-                DateUtil.convert("yyyy-MM-dd", "dd-MM-yyyy", date)));
+                DateUtil.convert("yyyy-MM-dd", "dd-MM-yyyy", baseURL + date)));
         return "dashboard";
     }
 }
