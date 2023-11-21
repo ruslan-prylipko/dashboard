@@ -26,6 +26,8 @@ class RateServiceImplTest {
 
     private final String date = "09-11-2023";
     private final String dbDate = "09.11.2023";
+    private final
+    String baseURL = "http://example.com/";
 
     @Mock
     RateRepository rateRepository;
@@ -47,7 +49,7 @@ class RateServiceImplTest {
 
         doReturn(rateList).when(this.rateRepository).findAllByDate(dbDate);
 
-        List<Rate> allRates = rateService.getAllRates(date);
+        List<Rate> allRates = rateService.getAllRates(baseURL, date);
 
         assertNotNull(allRates);
         assertEquals(rateList, allRates);
@@ -73,10 +75,10 @@ class RateServiceImplTest {
         });
 
         doReturn(List.of()).when(this.rateRepository).findAllByDate(dbDate);
-        doReturn(reader).when(this.webResourceService).getResourceByURL(date);
+        doReturn(reader).when(this.webResourceService).getResourceByURL(baseURL + date);
         doReturn(rates).when(this.jsonParserService).getJsonObject(reader);
 
-        List<Rate> allRates = rateService.getAllRates(date);
+        List<Rate> allRates = rateService.getAllRates(baseURL, date);
 
         assertNotNull(allRates);
         assertEquals(Arrays.asList(rateArray), allRates);

@@ -4,7 +4,6 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ua.com.dashboard.repositories.rate.RateRepository;
 import ua.com.dashboard.services.json.JsonParserService;
@@ -35,7 +34,7 @@ public class RateServiceImpl implements RateService {
 	}
 
 	@Override
-	public List<Rate> getAllRates(final String date)
+	public List<Rate> getAllRates(String url, final String date)
 			throws JsonIOException, JsonSyntaxException, IOException, ParseException {
 
 		String dbDate = DateUtil.convert("dd-MM-yyyy", "dd.MM.yyyy", date);
@@ -46,7 +45,7 @@ public class RateServiceImpl implements RateService {
 			return ratesList;
 		}
 
-		Reader reader = webResourceService.getResourceByURL(date);
+		Reader reader = webResourceService.getResourceByURL(url + date);
 		Rates rates = jsonParserService.getJsonObject(reader);
 
 		ratesList = Arrays.asList(rates.getData());
