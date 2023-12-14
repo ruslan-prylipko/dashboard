@@ -8,7 +8,7 @@
 
 <body>
 	<div>
-		<form action="/dashboard/rates/all" method="get">
+		<form action="/rates/all" method="get">
 			<div>
 				<p>
 					<span>Курс валют:</span>
@@ -20,6 +20,9 @@
 				</div>
 			</div>
 		</form>
+		<div>
+			<a href="/logout">Вийти</a>
+		</div>
 		<div th:if="${rates}">
 			<table>
 				<thead>

@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.text.ParseException;
 
 @Controller
-@RequestMapping("/dashboard/rates")
+@RequestMapping("/rates")
 public class RateController {
 
     @Value("${api.minfin.com.ua.rates}")

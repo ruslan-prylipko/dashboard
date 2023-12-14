@@ -1,24 +1,23 @@
-package ua.com.dashboard.controllers.main;
+package ua.com.dashboard.controllers.dashboard;
 
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-
-class MainControllerTest {
+class DashboardControllerTest {
 
     @Test
     @SneakyThrows
-    void getMainPage() {
+    void getDashboard() {
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new DashboardController()).build();
 
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(new MainController()).build();
-
-        mockMvc.perform(get("/main/"))
+        mockMvc.perform(get("/dashboard/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("main"));
+                .andExpect(view().name("dashboard"));
     }
 }

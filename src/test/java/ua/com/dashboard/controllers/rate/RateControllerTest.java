@@ -39,7 +39,7 @@ class RateControllerTest {
 
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(this.rateController).build();
 
-        mockMvc.perform(get("/dashboard/rates/all?date=2023-11-21"))
+        mockMvc.perform(get("/rates/all?date=2023-11-21"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("dashboard"))
                 .andExpect(model().attributeExists("rates"))
