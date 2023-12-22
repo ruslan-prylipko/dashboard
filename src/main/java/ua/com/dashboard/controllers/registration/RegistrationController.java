@@ -33,7 +33,6 @@ public class RegistrationController {
             @RequestParam("password") String password) {
         Util.stringValidate(firstName, lastName, username, password);
         User user = new User(firstName, lastName, username, new BCryptPasswordEncoder().encode(password));
-        user.setRole("role_user");
         userService.save(user);
         return "main";
     }

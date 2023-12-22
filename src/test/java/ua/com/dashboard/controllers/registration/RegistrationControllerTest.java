@@ -55,7 +55,7 @@ class RegistrationControllerTest {
                         .param("username", "alice.johnson")
                         .param("password", "P@ssw0rd1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("login"));
+                .andExpect(view().name("main"));
 
         verify(userService, times(1)).save(user);
     }

@@ -7,7 +7,6 @@ import lombok.*;
 @Table(name = "users")
 @Setter
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @EqualsAndHashCode
@@ -21,7 +20,7 @@ public class User {
     @EqualsAndHashCode.Exclude
     @NonNull private String password;
     @EqualsAndHashCode.Exclude
-    private String role;
+    private String role = "ROLE_USER";
 
     @Override
     public String toString() {
