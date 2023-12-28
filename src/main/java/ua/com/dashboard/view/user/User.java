@@ -1,27 +1,33 @@
 package ua.com.dashboard.view.user;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.*;
+import ua.com.dashboard.view.user.role.Role;
 
 @Entity
 @Table(name = "users")
-@Setter
-@Getter
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
-@EqualsAndHashCode
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    
     @NonNull private String firstName;
     @NonNull private String lastName;
     @NonNull private String username;
+    
     @EqualsAndHashCode.Exclude
     @NonNull private String password;
+    
     @EqualsAndHashCode.Exclude
-    private String role = "ROLE_USER";
-
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Role> roles;
+    
     @Override
     public String toString() {
         return "User " +

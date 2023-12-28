@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ua.com.dashboard.services.user.UserService;
 import ua.com.dashboard.view.user.User;
+import ua.com.dashboard.view.user.role.Role;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -17,6 +18,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @ExtendWith(MockitoExtension.class)
@@ -41,11 +45,18 @@ class RegistrationControllerTest {
     @Test
     @SneakyThrows
     void registrationPassedCorrectData() {
+    	
+    	List<Role> roles = new ArrayList<>() {
+			{
+				add(new Role("ROLE_USER"));
+			}
+		};
 
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(this.registrationController).build();
 
         User user = new User("Alice", "Johnson", "alice.johnson", "P@ssw0rd1");
-        User userForReturn = new User(1, "Alice", "Johnson", "alice.johnson", "P@ssw0rd1", null);
+        user.setRoles(roles);
+        User userForReturn = new User(1, "Alice", "Johnson", "alice.johnson", "P@ssw0rd1", roles);
 
         doReturn(userForReturn).when(this.userService).save(user);
 
